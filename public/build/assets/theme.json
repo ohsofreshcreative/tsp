@@ -1549,19 +1549,9 @@
           "color": "var(--action)"
         },
         {
-          "name": "Background (Brand)",
-          "slug": "background-brand",
-          "color": "var(--bg-brand)"
-        },
-        {
           "name": "Primary (Light)",
           "slug": "primary-light",
           "color": "var(--color-primary-300)"
-        },
-        {
-          "name": "Primary (Lighter)",
-          "slug": "primary-lighter",
-          "color": "var(--color-primary-100)"
         },
         {
           "name": "Secondary (Light)",

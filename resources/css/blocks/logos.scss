@@ -1,13 +1,5 @@
 .b-logos {
-	@keyframes infinite-scroll {
-			0% {
-				transform: translateX(0);
-			}
 
-			100% {
-				transform: translateX(-25%);
-			}
-		}
 
 		.animate-infinite-scroll {
 			animation: infinite-scroll 35s linear infinite;
@@ -16,4 +8,14 @@
 		.animate-infinite-scroll:hover {
 			animation-play-state: paused;
 		}
-}
+}	
+
+@keyframes infinite-scroll {
+			0% {
+				transform: translateX(0);
+			}
+
+			100% {
+				transform: translateX(-25%);
+			}
+		}
