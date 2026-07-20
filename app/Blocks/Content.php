@@ -17,7 +17,7 @@ class Content extends Block
 	public $mode = 'edit';
 public $supports = [
     'align' => false,
-    'mode' => false,
+    'mode' => true,
     'jsx' => true,
     'anchor' => true,
     'customClassName' => true,
@@ -72,6 +72,12 @@ public $supports = [
 			->addText('section_class', [
 				'label' => 'Dodatkowe klasy CSS',
 			])
+			->addTrueFalse('bgshape', [
+				'label' => 'Kształt w tle',
+				'ui' => 1,
+				'ui_on_text' => 'Tak',
+				'ui_off_text' => 'Nie',
+			])
 			->addTrueFalse('nolist', [
 				'label' => 'Brak punktatorów',
 				'ui' => 1,
@@ -108,7 +114,6 @@ public $supports = [
 					'none' => 'Brak (domyślne)',
 					'section-white' => 'Białe',
 					'section-light' => 'Jasne',
-					'section-gray' => 'Szare',
 					'section-brand' => 'Marki',
 					'section-gradient' => 'Gradient',
 					'section-dark' => 'Ciemne',
@@ -129,6 +134,7 @@ public $supports = [
 			'section_id' => get_field('section_id'),
 			'section_class' => get_field('section_class'),
 
+			'bgshape' => (bool) get_field('bgshape'),
 			'flip' => (bool) get_field('flip'),
 			'wide' => (bool) get_field('wide'),
 			'nomt' => (bool) get_field('nomt'),

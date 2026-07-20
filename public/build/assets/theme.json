@@ -1504,6 +1504,11 @@
           "color": "rgb(var(--p-700))"
         },
         {
+          "name": "Primary (800)",
+          "slug": "primary-800",
+          "color": "rgb(var(--p-800))"
+        },
+        {
           "name": "Secondary",
           "slug": "secondary",
           "color": "rgb(var(--secondary))"
@@ -1519,9 +1524,9 @@
           "color": "rgb(var(--s-100))"
         },
         {
-          "name": "Secondary (300)",
-          "slug": "secondary-300",
-          "color": "rgb(var(--s-300))"
+          "name": "Secondary (200)",
+          "slug": "secondary-200",
+          "color": "rgb(var(--s-200))"
         },
         {
           "name": "Secondary (500)",
@@ -1532,6 +1537,11 @@
           "name": "Secondary (600)",
           "slug": "secondary-600",
           "color": "rgb(var(--s-600))"
+        },
+        {
+          "name": "Third",
+          "slug": "third",
+          "color": "rgb(var(--third))"
         },
         {
           "name": "Action",
@@ -1552,6 +1562,16 @@
           "name": "Primary (Lighter)",
           "slug": "primary-lighter",
           "color": "var(--color-primary-100)"
+        },
+        {
+          "name": "Secondary (Light)",
+          "slug": "secondary-light",
+          "color": "var(--color-secondary-200)"
+        },
+        {
+          "name": "Secondary (Lighter)",
+          "slug": "secondary-lighter",
+          "color": "var(--color-secondary-100)"
         }
       ]
     },

@@ -11,22 +11,23 @@
 
 	<div class="__wrapper c-main relative">
 		@if (!empty($g_wysiwyg['header']))
-		<h2 data-gsap-element="header" class="">{{ $g_wysiwyg['header'] }}</h2>
+		<h4 data-gsap-element="header" class="text-primary">{{ $g_wysiwyg['header'] }}</h4>
 		@endif
 
-		<div data-gsap-element="txt" class="__txt mt-4">
-			{!! $g_wysiwyg['txt'] !!}
+		<div>
+			<div data-gsap-element="txt" class="__txt mt-4">
+				{!! $g_wysiwyg['txt'] !!}
+			</div>
+			@if (!empty($g_wysiwyg['button']))
+			<x-button
+				:href="$g_wysiwyg['button']['url']"
+				variant="primary"
+				class="mt-6"
+				data-gsap-element="btn">
+				{{ $g_wysiwyg['button']['title'] }}
+			</x-button>
+			@endif
 		</div>
-
-		@if (!empty($g_wysiwyg['button']))
-		<x-button
-			:href="$g_wysiwyg['button']['url']"
-			variant="primary"
-			class="mt-6"
-			data-gsap-element="btn">
-			{{ $g_wysiwyg['button']['title'] }}
-		</x-button>
-		@endif
 	</div>
 
 </section>

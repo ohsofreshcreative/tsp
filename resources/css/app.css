@@ -11,40 +11,38 @@
   --body: 42 63 80; /* #2A3F50 */
 
 /* PRIMARY (lewa kolumna – granat) */
---primary: 0 87 155; /* #00579B */
---p-hover: 4 6 45; /* #04062D */
+--primary: 23 28 132;   /* #171C84 */
+--p-hover: 5 6 26;      /* #05061A */
 
-/* PRIMARY (niebieski) */
---p-50: 176 214 243;  /* #B0D6F3 */
---p-100: 138 190 230; /* #8ABEE6 */
---p-200: 94 157 207;  /* #5E9DCF */
---p-300: 57 135 195;  /* #3987C3 */
---p-400: 23 107 172;  /* #176BAC */
---p-500: 0 87 155;    /* #00579B */
---p-600: 0 73 129;    /* #004981 */
---p-700: 0 58 103;    /* #003A67 */
---p-800: 0 44 78;     /* #002C4E */
---p-900: 0 29 52;     /* #001D34 */
---p-dark: 0 17 31;    /* #00111F */
+--p-50: 200 202 240;    /* #C8CAF0 */
+--p-100: 168 170 221;   /* #A8AADD */
+--p-200: 133 136 204;   /* #8588CC */
+--p-300: 92 96 182;     /* #5C60B6 */
+--p-400: 57 61 162;     /* #393DA2 */
+--p-500: 23 28 132;     /* #171C84 */
+--p-600: 19 23 110;     /* #13176E */
+--p-700: 15 19 88;      /* #0F1358 */
+--p-800: 12 14 66;      /* #0C0E42 */
+--p-900: 8 9 44;        /* #08092C */
+--p-dark: 5 6 26;       /* #05061A */
 
---action: rgb(0, 87, 155);
+--action: rgb(23, 28, 132);
 
+/* SECONDARY (niebieski) */
+--secondary: 38 130 232;  /* #2682E8 */
+--s-hover: 32 108 193;    /* #206CC1 */
 
-/* SECONDARY (turkusowy) */
---secondary: 0 192 197; /* #00C0C5 */
---s-hover: 0 160 164;   /* #00A0A4 */
-
---s-50: 171 244 246;  /* #ABF4F6 */
---s-100: 137 238 241; /* #89EEF1 */
---s-200: 99 224 228;  /* #63E0E4 */
---s-300: 59 222 226;  /* #3BDEE2 */
---s-400: 22 211 216;  /* #16D3D8 */
---s-500: 0 192 197;   /* #00C0C5 */
---s-600: 0 160 164;   /* #00A0A4 */
---s-700: 0 128 131;   /* #008083 */
---s-800: 0 96 99;     /* #006063 */
---s-900: 0 64 66;     /* #004042 */
---s-dark: 0 38 39;    /* #002627 */
+--s-50: 212 230 250;    /* #D4E6FA */
+--s-100: 183 213 247;   /* #B7D5F7 */
+--s-200: 146 192 243;   /* #92C0F3 */
+--s-300: 110 172 240;   /* #6EACF0 */
+--s-400: 74 151 236;    /* #4A97EC */
+--s-500: 38 130 232;    /* #2682E8 */
+--s-600: 32 108 193;    /* #206CC1 */
+--s-700: 25 87 155;     /* #19579B */
+--s-800: 19 65 116;     /* #134174 */
+--s-900: 13 43 77;      /* #0D2B4D */
+--s-dark: 8 26 46;      /* #081A2E */
 
 
 /* THIRD (różowy/fioletowy) */
@@ -64,10 +62,11 @@
 --t-dark: 50 26 48;   /* #321A30 */
 
   /* neutrals / fixed backgrounds */
+  --text-body: rgb(var(--p-800));
   --gray: #2a3f50;
   --bg: #F4F9FF;
-  --bg-light: #F7EEE5;
-  --bg-lighter: #E9F8F3;
+  --bg-light: rgb(var(--s-100));
+  --bg-lighter: rgb(var(--s-50));
   --bg-brand: #002704;
   --bg-dark: #071622;
 }
@@ -130,14 +129,27 @@
   --color-primary-light: var(--color-primary-300);
   --color-primary-lighter: var(--color-primary-100);
 
-  --color-secondary-light: var(--color-secondary-300);
+  --color-secondary-light: var(--color-secondary-200);
   --color-secondary-lighter: var(--color-secondary-100);
 
   --color-muted: var(--color-secondary-500);
-  --gradient: linear-gradient(90deg, #132A23 0%, #0D3F2F 100%);
+  --gradient: linear-gradient(90deg, #2265CB 0%, #181D84 100%);
   --gradient-light: linear-gradient(-90deg, #0E3A2D 0%, #0A533D 100%);
   --gradient-s: linear-gradient(-90deg, #DE855D 0%, #D37A51 100%);
 
+}
+
+@utility m-header {
+  margin-bottom: var(--m-header);
+}
+@utility m-title {
+  padding-bottom: var(--m-title);
+}
+@utility m-btn {
+  margin-top: var(--m-btn);
+}
+@utility m-img {
+  margin-bottom: var(--m-img);
 }
 
 @import '../css/variables.scss';
@@ -149,21 +161,33 @@
 
 /*-- USED ---*/
 @import '../css/blocks/hero.scss';
+@import '../css/blocks/about.scss';
+@import '../css/blocks/values.scss';
+@import '../css/blocks/content.scss';
+@import '../css/blocks/cta.scss';
+@import '../css/blocks/whyus.scss';
+@import '../css/blocks/logos.scss';
+@import '../css/blocks/reviews.scss';
+@import '../css/blocks/banner.scss';
+@import '../css/blocks/product.scss';
+@import '../css/blocks/table.scss';
+@import '../css/blocks/products.scss';
+@import '../css/blocks/offers.scss';
+@import '../css/blocks/wysiwyg.scss';
+@import '../css/blocks/history.scss';
+@import '../css/blocks/checks.scss';
+@import '../css/blocks/slider.scss';
+@import '../css/blocks/map.scss';
+@import '../css/blocks/catalogues.scss';
+@import '../css/blocks/action.scss';
 /*-- NOT USED ---*/
 @import '../css/blocks/accordion.scss';
 @import '../css/blocks/cards.scss';
 @import '../css/blocks/category-posts.scss';
 @import '../css/blocks/contact.scss';
-@import '../css/blocks/content.scss';
-@import '../css/blocks/cta.scss';
 @import '../css/blocks/faq.scss';
-@import '../css/blocks/banner.scss';
 @import '../css/blocks/image.scss';
-@import '../css/blocks/logos.scss';
 @import '../css/blocks/numbers.scss';
 @import '../css/blocks/overlap.scss';
 @import '../css/blocks/proces.scss';
-@import '../css/blocks/reviews.scss';
-@import '../css/blocks/slider.scss';
 @import '../css/blocks/tabs.scss';
-@import '../css/blocks/wysiwyg.scss';

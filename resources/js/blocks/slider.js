@@ -1,46 +1,52 @@
 import Swiper from 'swiper';
-import { Pagination } from 'swiper/modules';
+import { Pagination, Navigation } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
 const initSlider = () => {
   const sliders = document.querySelectorAll('.slider-standard');
-  if (!sliders.length) {
-    return;
-  }
+  if (!sliders.length) return;
 
   sliders.forEach((slider) => {
+    const progressFill = slider.querySelector('.__progress-fill');
+
+    const fixOffset = (swiper) => {
+      const slideW = swiper.slides[0]?.offsetWidth ?? 0;
+      if (!slideW) return;
+      const n = swiper.slides.length;
+      const gap = swiper.params.spaceBetween;
+      const currentMax = n * slideW + (n - 1) * gap - swiper.width;
+      const idealLast = (n - 1) * (slideW + gap);
+      swiper.params.slidesOffsetAfter = Math.max(0, idealLast - currentMax);
+      swiper.update();
+    };
+
+    const updateProgress = (swiper) => {
+      if (!progressFill) return;
+      const n = swiper.slides.length;
+      const pct = ((swiper.activeIndex + 1) / n) * 100;
+      progressFill.style.width = pct + '%';
+    };
+
     new Swiper(slider, {
-      modules: [Pagination],
-      loop: true,
+      modules: [Pagination, Navigation],
+      loop: false,
       grabCursor: true,
-      centeredSlides: false,
-      slidesPerView: 1,
-      spaceBetween: 24,
-      pagination: {
-        el: slider.querySelector('.swiper-pagination'),
-        clickable: true,
+      slidesPerView: 'auto',
+      spaceBetween: 80,
+      navigation: {
+        nextEl: slider.querySelector('.__next'),
+        prevEl: slider.querySelector('.__prev'),
       },
-      breakpoints: {
-        320: {
-          slidesPerView: 1,
+      on: {
+        init(swiper) {
+          fixOffset(swiper);
+          updateProgress(swiper);
         },
-        580: {
-          slidesPerView: 2,
-        },
-        767: {
-          slidesPerView: 3,
-        },
-        992: {
-          slidesPerView: 3.5,
-        },
-        1200: {
-          slidesPerView: 4,
-        },
-        1400: {
-          slidesPerView: 4.5,
-        },
+        slideChange: updateProgress,
+        resize: fixOffset,
       },
     });
   });

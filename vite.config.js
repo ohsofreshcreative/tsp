@@ -6,11 +6,11 @@ import path from 'path'
 
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
-  const wpOrigin = env.WP_HOME || 'http://sage.local'
+  const wpOrigin = env.WP_HOME || 'http://tsp.local'
 
   return {
     server: {
-      host: 'sage.local',
+      host: 'tsp.local',
       port: 5981,
       strictPort: true,
       cors: true,
@@ -22,13 +22,13 @@ export default defineConfig(({ command, mode }) => {
       },
       hmr: {
         protocol: 'ws',
-        host: 'sage.local',
+        host: 'tsp.local',
         port: 5981,
       },
     },
 
     base: command === 'build'
-      ? '/wp-content/themes/sage/public/build/'
+      ? '/wp-content/themes/tsp/public/build/'
       : '/build/',
 
     plugins: [

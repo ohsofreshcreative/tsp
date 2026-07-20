@@ -1,5 +1,11 @@
 .b-reviews {
 	.swiper {
+		.swiper-wrapper {
+			align-items: stretch;
+		}
+		.swiper-slide {
+			height: auto;
+		}
 		.__img img {
 			width: 56px;
 			height: 56px;
@@ -22,12 +28,6 @@
 	-webkit-line-clamp: 6;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
-}
-
-// Usuwamy style dla .is-expanded, bo nie będą już potrzebne
-
-.hidden {
-	display: none;
 }
 
 .review-popup {

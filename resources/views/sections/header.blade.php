@@ -3,7 +3,7 @@ use App\Walkers\DropdownWalker;
 use App\Walkers\MobileDropdownWalker;
 @endphp
 
-<header x-data="{ mobileOpen: false }" class="relative top-0 z-50 bg-white masthead fixed-top">
+<header x-data="{ mobileOpen: false }" class="relative top-0 z-50 bg-white masthead fixed-top mx-6 rounded-b-[48px]">
 
 	<!-- Desktop Header -->
 	<div class="items-center justify-between hidden h-full py-4 px-12 mx-auto md:flex">

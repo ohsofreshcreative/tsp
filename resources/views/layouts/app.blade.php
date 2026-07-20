@@ -9,7 +9,7 @@
 	@php(wp_head())
 
 	{{-- Fonts --}}
-	<link rel="stylesheet" href="https://use.typekit.net/qgh2icj.css">
+	<link rel="stylesheet" href="https://use.typekit.net/eax3wfy.css">
 
 	{{-- Styles --}}
 	@vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -42,7 +42,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 		@else
 
-		<main id="main" class="main -menu-mt">
+		<main id="main" class="main">
 			@yield('content')
 		</main>
 

@@ -41,8 +41,6 @@
 	}
 }
 
-
-
 /*--- BRAK PUNKTATORÓW ---*/
 
 .b-wysiwyg.no-list {
@@ -63,6 +61,24 @@
 					display: none;
 				}
 			}
+		}
+	}
+}
+
+/*--- LEAD - O NAS ---*/
+
+.b-wysiwyg.lead {
+	.__wrapper {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 32px;
+	}
+}
+
+@media (max-width: 1024px) {
+	.b-wysiwyg.lead {
+		.__wrapper {
+			grid-template-columns: 1fr;
 		}
 	}
 }

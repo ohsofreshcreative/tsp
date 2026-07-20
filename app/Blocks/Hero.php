@@ -17,7 +17,7 @@ class Hero extends Block
 	public $mode = 'edit';
 	public $supports = [
 		'align' => false,
-		'mode' => false,
+		'mode' => true,
 		'jsx' => true,
 	];
 
@@ -43,6 +43,10 @@ class Hero extends Block
 				'label' => 'Obraz',
 				'return_format' => 'array',
 				'preview_size' => 'thumbnail',
+			])
+			->addFile('video', [
+				'label' => 'Wideo (w tle)',
+				'return_format' => 'url',
 			])
 			->addText('title', ['label' => 'Tytuł'])
 			->addWysiwyg('text', [

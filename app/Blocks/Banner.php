@@ -8,16 +8,16 @@ use App\Support\SectionClasses;
 
 class Banner extends Block
 {
-	public $name = 'Hero - Z tłem';
-	public $description = 'banner - wersja hero z tłem';
+	public $name = 'Hero - Podstrona';
+	public $description = 'banner - hero dla podstron';
 	public $slug = 'banner';
 	public $category = 'formatting';
 	public $icon = 'align-full-width';
-	public $keywords = ['tresc', 'zdjecie'];
+	public $keywords = ['tresc', 'zdjecie', 'podstrona', 'hero'];
 	public $mode = 'edit';
 	public $supports = [
 		'align' => false,
-		'mode' => false,
+		'mode' => true,
 		'jsx' => true,
 	];
 
@@ -32,7 +32,7 @@ class Banner extends Block
 				'required' => 0,
 			])
 			->addAccordion('accordion1', [
-				'label' => 'Hero - Z tłem',
+				'label' => 'Hero - Podstrona',
 				'open' => false,
 				'multi_expand' => true,
 			])
@@ -44,15 +44,11 @@ class Banner extends Block
 				'return_format' => 'array',
 				'preview_size' => 'thumbnail',
 			])
-			->addTextarea('header', [
-				'label' => 'Nagłówek',
-				'rows' => 2,
-				'new_lines' => 'br',
-			])
+			->addText('title', ['label' => 'Tytuł'])
 			->addWysiwyg('text', [
 				'label' => 'Treść',
-				'tabs' => 'all',
-				'toolbar' => 'full',
+				'tabs' => 'all', // 'visual', 'text', 'all'
+				'toolbar' => 'full', // 'basic', 'full'
 				'media_upload' => true,
 			])
 			->addLink('button1', [
@@ -62,6 +58,12 @@ class Banner extends Block
 			->addLink('button2', [
 				'label' => 'Przycisk #2',
 				'return_format' => 'array',
+			])
+			->addTrueFalse('shape', [
+				'label' => 'Kształt pod sekcją',
+				'ui' => 1,
+				'ui_on_text' => 'Tak',
+				'ui_off_text' => 'Nie',
 			])
 			->endGroup()
 

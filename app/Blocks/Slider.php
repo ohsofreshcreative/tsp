@@ -4,19 +4,20 @@ namespace App\Blocks;
 
 use Log1x\AcfComposer\Block;
 use StoutLogic\AcfBuilder\FieldsBuilder;
+use App\Support\SectionClasses;
 
 class Slider extends Block
 {
-    public $name = 'Slider - Standard';
+    public $name = 'Slider - Oferta';
     public $description = 'slider';
     public $slug = 'slider';
     public $category = 'formatting';
     public $icon = 'image-flip-horizontal';
-    public $keywords = ['slider', 'kafelki'];
+    public $keywords = ['slider', 'oferta'];
     public $mode = 'edit';
     public $supports = [
         'align' => false,
-        'mode' => false,
+        'mode' => true,
         'jsx' => true,
     ];
 
@@ -25,122 +26,95 @@ class Slider extends Block
         $slider = new FieldsBuilder('slider');
 
         $slider
-            ->setLocation('block', '==', 'acf/slider') // ważne!
+            ->setLocation('block', '==', 'acf/slider')
             ->addText('block-title', [
                 'label' => 'Tytuł',
                 'required' => 0,
             ])
             ->addAccordion('accordion1', [
-                'label' => 'Slider - Kafelki',
+                'label' => 'Slider - Oferta',
                 'open' => false,
                 'multi_expand' => true,
             ])
-            /*--- FIELDS ---*/
             ->addTab('Treści', ['placement' => 'top'])
-            ->addGroup('g_slider', ['label' => ''])
-
-            ->addText('title', ['label' => 'Tytuł'])
-
-            ->addRepeater('r_slider', [
-                'label' => 'Slider',
-                'layout' => 'table', // 'row', 'block', albo 'table'
-                'min' => 1,
-                'max' => 10,
-                'button_label' => 'Dodaj kafelek'
-            ])
-            ->addImage('image', [
-                'label' => 'Zdjęcie - tło',
-                'return_format' => 'array', // lub 'url', lub 'id'
-                'preview_size' => 'thumbnail',
-            ])
-            ->addImage('icon', [
-                'label' => 'Ikonka',
-                'return_format' => 'array',
-                'preview_size' => 'thumbnail',
-            ])
-            ->addText('header', [
-                'label' => 'Nagłówek',
-            ])
-            ->addTextarea('opis', [
-                'label' => 'Opis',
-                'rows' => 4,
-                'new_lines' => 'br',
-            ])
-            ->endRepeater()
-
-            ->endGroup()
-
-            /*--- USTAWIENIA BLOKU ---*/
+            ->addText('slider_title', ['label' => 'Tytuł sekcji'])
+            ->addMessage('Informacja', 'Slider automatycznie wyświetla nadrzędne wpisy z sekcji „Oferta". Aby zarządzać elementami, przejdź do „Oferta" w panelu administratora.')
 
             ->addTab('Ustawienia bloku', ['placement' => 'top'])
-            ->addText('section_id', [
-                'label' => 'ID',
-            ])
-            ->addText('section_class', [
-                'label' => 'Dodatkowe klasy CSS',
-            ])
-            ->addTrueFalse('nolist', [
-                'label' => 'Brak punktatorów',
-                'ui' => 1,
-                'ui_on_text' => 'Tak',
-                'ui_off_text' => 'Nie',
-            ])
-            ->addTrueFalse('flip', [
-                'label' => 'Odwrotna kolejność',
-                'ui' => 1,
-                'ui_on_text' => 'Tak',
-                'ui_off_text' => 'Nie',
-            ])
-            ->addTrueFalse('wide', [
-                'label' => 'Szeroka kolumna',
-                'ui' => 1,
-                'ui_on_text' => 'Tak',
-                'ui_off_text' => 'Nie',
-            ])
+            ->addText('section_id', ['label' => 'ID'])
+            ->addText('section_class', ['label' => 'Dodatkowe klasy CSS'])
             ->addTrueFalse('nomt', [
                 'label' => 'Usunięcie marginesu górnego',
                 'ui' => 1,
                 'ui_on_text' => 'Tak',
                 'ui_off_text' => 'Nie',
             ])
-            ->addTrueFalse('gap', [
-                'label' => 'Większy odstęp',
-                'ui' => 1,
-                'ui_on_text' => 'Tak',
-                'ui_off_text' => 'Nie',
-            ])
+			->addTrueFalse('bgshape', [
+				'label' => 'Kształt w tle',
+				'ui' => 1,
+				'ui_on_text' => 'Tak',
+				'ui_off_text' => 'Nie',
+			])
             ->addSelect('background', [
                 'label' => 'Kolor tła',
                 'choices' => [
-                    'none' => 'Brak (domyślne)',
-                    'section-white' => 'Białe',
-                    'section-light' => 'Jasne',
-                    'section-gray' => 'Szare',
-                    'section-brand' => 'Marki',
-                    'section-gradient' => 'Gradient',
-                    'section-dark' => 'Ciemne',
+                    'none'              => 'Brak (domyślne)',
+                    'section-white'     => 'Białe',
+                    'section-light'     => 'Jasne',
+                    'section-gray'      => 'Szare',
+                    'section-brand'     => 'Marki',
+                    'section-gradient'  => 'Gradient',
+                    'section-dark'      => 'Ciemne',
                 ],
                 'default_value' => 'none',
-                'ui' => 0, // Ulepszony interfejs
+                'ui' => 0,
                 'allow_null' => 0,
             ]);
 
         return $slider;
     }
 
-    public function with()
+    public function with(): array
     {
-        return [
-            'g_slider' => get_field('g_slider'),
-            'slider' => get_field('g_slider')['r_slider'] ?? [],
-            'section_id' => get_field('section_id'),
+        $offers_query = new \WP_Query([
+            'post_type'      => 'offer',
+            'post_parent'    => 0,
+            'posts_per_page' => -1,
+            'orderby'        => 'menu_order',
+            'order'          => 'ASC',
+            'post_status'    => 'publish',
+        ]);
+
+        $slides = [];
+        foreach ($offers_query->posts as $post) {
+            $thumb_id = get_post_thumbnail_id($post->ID);
+            $icon     = get_field('offer_icon', $post->ID);
+            $slides[] = [
+                'title'     => $post->post_title,
+                'excerpt'   => get_the_excerpt($post),
+                'url'       => get_permalink($post->ID),
+                'image_url' => $thumb_id ? wp_get_attachment_image_url($thumb_id, 'large') : null,
+                'image_alt' => $thumb_id ? get_post_meta($thumb_id, '_wp_attachment_image_alt', true) : '',
+                'icon_url'  => $icon['url'] ?? null,
+                'icon_alt'  => $icon['alt'] ?? '',
+            ];
+        }
+        wp_reset_postdata();
+
+        $fields = [
+            'slides'       => $slides,
+            'slider_title' => get_field('slider_title'),
+            'section_id'   => get_field('section_id'),
             'section_class' => get_field('section_class'),
-            'nolist' => get_field('nolist'),
-            'flip' => get_field('flip'),
-            'wide' => get_field('wide'),
-            'nomt' => get_field('nomt'),
-            'gap' => get_field('gap'),
-            'background' => get_field('background'),
+            'nomt'         => (bool) get_field('nomt'),
+			'bgshape' => (bool) get_field('bgshape'),
+            'background'   => get_field('background') ?: 'none',
         ];
+
+        $fields['sectionClass'] = SectionClasses::fromMap($fields, [
+            'nomt' => '!mt-0',
+        ]);
+
+        return $fields;
     }
 }

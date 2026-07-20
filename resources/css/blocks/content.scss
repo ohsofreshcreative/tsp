@@ -1,5 +1,10 @@
 .b-content {
 	.__txt {
+		h6 {
+			color:var(--color-primary);
+			font-size:20px !important;
+			margin-top:16px
+		}
 		p {
 			margin-bottom: 16px;
 		}
@@ -26,15 +31,15 @@
 				align-items: center;
 
 				&::before {
-					content: url('@images/pointer.svg');
-					position: relative;
-					left: 0;
-					top: -6px;
-					width: 14px;
-					height: 14px;
+					content: '';
+					display: inline-block;
+					width: 10px;
+					height: 10px;
+					background-image: url('@images/pointer.svg');
 					background-size: contain;
 					background-repeat: no-repeat;
 					background-position: center;
+					flex-shrink: 0;
 				}
 			}
 		}

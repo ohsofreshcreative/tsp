@@ -17,7 +17,7 @@ class Reviews extends Block
 	public $mode = 'edit';
 	public $supports = [
 		'align' => false,
-		'mode' => false,
+		'mode' => true,
 		'jsx' => true,
 	];
 
@@ -39,29 +39,9 @@ class Reviews extends Block
 			/*--- FIELDS ---*/
 			->addTab('Treści', ['placement' => 'top'])
 			->addGroup('g_reviews', ['label' => ''])
-			->addText('title', ['label' => 'Tytuł'])
-			->addWysiwyg('text', ['label' => 'Opis', 'media_upload' => 0, 'tabs' => 'visual'])
+
+			->addMessage('Edycja', 'Tę zawartość edytujemy klikając w menu panelu administratora "Opinie".')
 			->endGroup()
-
-			/*--- OPINIE ---*/
-
-			->addTab('Opinie', ['placement' => 'top'])
-			->addRepeater('r_reviews', [
-				'label' => 'Slider - Opinie',
-				'layout' => 'table', // 'row', 'block', albo 'table'
-				'min' => 1,
-				'max' => 15,
-				'button_label' => 'Dodaj kafelek'
-			])
-			->addTextarea('txt', [
-				'label' => 'Opis',
-				'rows' => 4,
-				'new_lines' => 'br',
-			])
-			->addText('name', [
-				'label' => 'Klient',
-			])
-			->endRepeater()
 
 			/*--- USTAWIENIA BLOKU ---*/
 
@@ -106,8 +86,8 @@ class Reviews extends Block
 	public function with(): array
 	{
 		$fields = [
-			'g_reviews' => get_field('g_reviews'),
-			'r_reviews' => get_field('r_reviews'),
+			'header'    => get_field('header', 'option'),
+			'r_reviews' => get_field('r_reviews', 'option') ?: [],
 
 			'section_id' => get_field('section_id'),
 			'section_class' => get_field('section_class'),

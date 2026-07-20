@@ -4,17 +4,27 @@ $category = !empty($categories) ? $categories[0] : null;
 @endphp
 
 <section data-gsap-anim="section" class="hero-blog bg-gradient relative overflow-visible">
+
+	@if(has_post_thumbnail())
+	<figure class="absolute inset-0 w-full h-full z-0 m-0">
+		<picture class="w-full h-full">
+			<img src="{{ get_the_post_thumbnail_url(get_the_ID(), 'large') }}" alt="{{ get_the_title() }}" class="w-full h-full object-cover" />
+		</picture>
+	</figure>
+	<div class="absolute inset-0 z-1 pointer-events-none" style="background: linear-gradient(90deg, #171F87 0%, rgba(23, 31, 135, 0.60) 100%);"></div>
+	@endif
+
 	<div class="__wrapper c-main relative z-10 -spt">
-		<div class="__content w-full sm:w-3/4 mx-auto pb-30">
+		<div class="__content w-full pb-30">
 			<div data-gsap-element="bread" class="__breadcrumb">
 				@if (function_exists('woocommerce_breadcrumb'))
 				{!! woocommerce_breadcrumb() !!}
 				@endif
 			</div>
 
-			<div class="__top mt-20 text-center">
+			<div class="__top mt-20">
 				@if ($category)
-				<a data-gsap-element="header" href="{{ get_category_link($category->term_id) }}" class="bg-primary-lighter hover:bg-primary-light border border-primary-light rounded-full text-sm px-4 py-3">{{ $category->name }}</a>
+				<a data-gsap-element="header" href="{{ get_category_link($category->term_id) }}" class="bg-secondary-lighter hover:bg-secondary-light border border-primary-light rounded-full text-sm px-4 py-3">{{ $category->name }}</a>
 				@endif
 				<h1 data-gsap-element="header" class="text-h2 text-white mt-6">{{ get_the_title() }}</h1>
 				@if(has_excerpt())
@@ -24,21 +34,7 @@ $category = !empty($categories) ? $categories[0] : null;
 				@endif
 			</div>
 		</div>
-	</div>
-	<img src="/wp-content/uploads/2026/01/blog-leaf.svg" alt="" class="absolute -top-20 -right-20 pointer-events-none">
-</section>
-
-<section data-gsap-anim="section">
-	<div id="tresc" class="__entry relative z-10 -mt-16">
-		<div class="c-main">
-
-			@if(has_post_thumbnail())
-			<div data-gsap-element="image" class="w-full img-2xl rounded-xl overflow-hidden mb-16">
-				{!! get_the_post_thumbnail(get_the_ID(), 'large', ['class' => 'w-full object-cover']) !!}
-			</div>
-			@endif
-		</div>
-
+		<a class="absolute bg-secondary hover:bg-secondary-hover w-20 h-20 rounded-full flex items-center justify-center mx-auto bottom-0 translate-y-1/2 z-20" href="#tresc"><img src="{{ get_template_directory_uri() }}/resources/images/anchor-arrow.svg" /></a>
 	</div>
 </section>
 
@@ -71,7 +67,7 @@ preg_match_all('/<h([1-4])[^>]*>(.*?)<\/h[1-4]>/', $content, $matches, PREG_SET_
 					$toc .='</ul></nav>' ;
 					@endphp
 
-					<div class="__content c-main __entry -smt grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-10">
+					<div id="tresc" class="__content c-main __entry -smt grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-10">
 
 					<div class="relative md:sticky top-0 md:top-30 h-max">
 						<p class="text-h5 m-title">Spis treści</p>
@@ -98,47 +94,38 @@ preg_match_all('/<h([1-4])[^>]*>(.*?)<\/h[1-4]>/', $content, $matches, PREG_SET_
 					$related_query = new WP_Query($related_args);
 					@endphp
 
-				 @if($related_query->have_posts())
-                    <section class="related-posts c-main border-t border-primary-light -smt pt-20 pb-26">
-                        <h3 class="text-2xl font-bold mb-6">Podobne wpisy</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            @while($related_query->have_posts())
-                            @php($related_query->the_post())
-                            <article @php(post_class('bg-white radius p-6 flex flex-col'))>
-                                <header>
-                                    @if(has_post_thumbnail())
-                                    <a href="{{ get_permalink() }}">
-                                        {!! get_the_post_thumbnail(null, 'large', ['class' => 'featured-image radius object-cover img-xs']) !!}
-                                    </a>
-                                    @endif
+					@if($related_query->have_posts())
+					<section class="related-posts c-main border-t border-dashed border-secondary-light -smt pt-20 pb-26">
+						<h3 class="text-2xl text-primary mb-6">Zobacz również</h3>
+						<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+							@while($related_query->have_posts())
+							@php($related_query->the_post())
+							<article @php(post_class(''))>
+								<a class="rounded-2xl group" href="{{ get_permalink() }}">
+									<div class="__content relative bg-white rounded-4xl p-6">
+										@if (has_post_thumbnail())
+										<div class="block rounded-2xl overflow-hidden">
+											<img src="{{ get_the_post_thumbnail_url(null, 'large') }}" alt="{{ get_the_title() }}" class="w-full img-s object-cover">
+										</div>
+										@endif
+										<h6 class="mt-6">
+											{!! get_the_title() !!}
+										</h6>
+										<!--  <div class="mt-2">
+            @php(the_excerpt())
+        </div> -->
+										<p href="{{ get_permalink() }}" class="btn btn-outline-secondary group-hover:!bg-secondary group-hover:!text-white !px-6 !py-3 mt-4">
+											Przeczytaj
+										</p>
+									</div>
+								</a>
 
-                                    @php($post_categories = get_the_category(get_the_ID()))
-                                    @if(!empty($post_categories))
-                                    <div class="flex flex-wrap gap-2 mt-4">
-                                        @foreach($post_categories as $post_category)
-                                        <a href="{{ get_category_link($post_category->term_id) }}" class="bg-primary-lighter hover:bg-primary-light border border-primary-light radius text-xs p-2">{{ $post_category->name }}</a>
-                                        @endforeach
-                                    </div>
-                                    @endif
-
-                                    <h2 class="entry-title text-h6 mt-4">
-                                        <a href="{{ get_permalink() }}">
-                                            {{ get_the_title() }}
-                                        </a>
-                                    </h2>
-
-                                </header>
-
-                                <a class="underline-btn mt-auto pt-4" href="{{ get_permalink() }}">
-                                    Przeczytaj
-                                </a>
-
-                            </article>
-                            @endwhile
-                            @php(wp_reset_postdata())
-                        </div>
-                    </section>
-                    @endif
+							</article>
+							@endwhile
+							@php(wp_reset_postdata())
+						</div>
+					</section>
+					@endif
 
 
 					<script>

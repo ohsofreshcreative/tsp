@@ -17,7 +17,7 @@ class Cta extends Block
 	public $mode = 'edit';
 	public $supports = [
 		'align' => false,
-		'mode' => false,
+		'mode' => true,
 		'jsx' => true,
 	];
 
@@ -38,29 +38,13 @@ class Cta extends Block
 			])
 			/*--- FIELDS ---*/
 			->addTab('Treść', ['placement' => 'top'])
-			->addGroup('g_cta', ['label' => ''])
-			->addImage('image', [
-				'label' => 'Obraz',
-				'return_format' => 'array', // lub 'url', lub 'id'
-				'preview_size' => 'medium',
+			->addMessage('Edycja', 'Tę zawartość edytujemy klikając w menu panelu administratora „Wezwanie do działania”.')
+			->addTrueFalse('form', [
+				'label' => 'Pokaż formularz',
+				'ui' => 1,
+				'ui_on_text' => 'Tak',
+				'ui_off_text' => 'Nie',
 			])
-			->addText('header', ['label' => 'Tytuł'])
-			->addWysiwyg('txt', [
-				'label' => 'Treść',
-				'tabs' => 'all', // 'visual', 'text', 'all'
-				'toolbar' => 'full', // 'basic', 'full'
-				'media_upload' => true,
-				'rows' => 4,
-			])
-			->addLink('button1', [
-				'label' => 'Przycisk',
-				'return_format' => 'array',
-			])
-			->addLink('button2', [
-				'label' => 'Przycisk',
-				'return_format' => 'array',
-			])
-			->endGroup()
 
 			/*--- USTAWIENIA BLOKU ---*/
 
@@ -123,7 +107,8 @@ class Cta extends Block
 	public function with(): array
 	{
 		$fields = [
-			'g_cta' => get_field('g_cta'),
+			'g_octa' => get_field('g_octa', 'option'),
+			'form' => (bool) get_field('form'),
 
 			'section_id' => get_field('section_id'),
 			'section_class' => get_field('section_class'),
