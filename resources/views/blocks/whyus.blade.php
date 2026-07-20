@@ -33,7 +33,7 @@
 					<div class="absolute inset-0 bg-black/60 z-[1]"></div>
 					@endif
 					<div class="relative z-10 flex flex-col justify-end h-full">
-						<h3 class="text-h4 text-white font-header font-bold leading-none mb-2">
+						<h3 class="text-h5 text-white font-header font-bold leading-none mb-2">
 							{{ $tile_2['header'] ?? '' }}
 						</h3>
 						<p class="text-white">
