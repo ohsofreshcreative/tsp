@@ -120,14 +120,27 @@ class Products extends Block
 		]);
 
 		$offer_children = [];
+		$used_categories = [];
+
 		foreach ($children_query->posts as $post) {
-			$thumb_id  = get_post_thumbnail_id($post->ID);
+			$thumb_id = get_post_thumbnail_id($post->ID);
+			$terms    = get_the_terms($post->ID, 'offer_category');
+			$post_cats = [];
+
+			if ($terms && !is_wp_error($terms)) {
+				foreach ($terms as $term) {
+					$post_cats[] = $term->slug;
+					$used_categories[$term->slug] = $term->name;
+				}
+			}
+
 			$offer_children[] = [
-				'id'        => $post->ID,
-				'title'     => $post->post_title,
-				'url'       => get_permalink($post->ID),
-				'image_url' => $thumb_id ? wp_get_attachment_image_url($thumb_id, 'large') : null,
-				'image_alt' => $thumb_id ? get_post_meta($thumb_id, '_wp_attachment_image_alt', true) : '',
+				'id'         => $post->ID,
+				'title'      => $post->post_title,
+				'url'        => get_permalink($post->ID),
+				'image_url'  => $thumb_id ? wp_get_attachment_image_url($thumb_id, 'large') : null,
+				'image_alt'  => $thumb_id ? get_post_meta($thumb_id, '_wp_attachment_image_alt', true) : '',
+				'categories' => $post_cats,
 			];
 		}
 		wp_reset_postdata();
@@ -135,6 +148,7 @@ class Products extends Block
 		$fields = [
 			'g_products'     => get_field('g_products'),
 			'offer_children' => $offer_children,
+			'categories'     => $used_categories,
 
 			'section_id'   => get_field('section_id'),
 			'section_class' => get_field('section_class'),

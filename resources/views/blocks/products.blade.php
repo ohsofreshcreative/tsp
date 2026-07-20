@@ -15,10 +15,21 @@
 
 	<div class="__wrapper c-main relative">
 
+		@if (!empty($categories) && count($categories) > 1)
+		<div class="__filters flex flex-wrap gap-3 mb-8">
+			<button class="btn btn-primary js-filter active" data-filter="all">Wszystkie</button>
+			@foreach ($categories as $slug => $name)
+			<button class="btn btn-outline-primary js-filter" data-filter="{{ $slug }}">{{ $name }}</button>
+			@endforeach
+		</div>
+		@endif
+
 		@if (!empty($offer_children))
 		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 			@foreach ($offer_children as $child)
-			<div data-gsap-element="card" class="__offer-card relative flex flex-col overflow-hidden radius bg-white shadow-sm">
+			<div data-gsap-element="card"
+				 data-categories="{{ implode(' ', $child['categories']) }}"
+				 class="__offer-card relative flex flex-col overflow-hidden radius bg-white shadow-sm">
 				@if (!empty($child['image_url']))
 				<figure class="m-0 overflow-hidden aspect-[4/3]">
 					<img
@@ -45,5 +56,30 @@
 		@endif
 
 	</div>
+
+	<script>
+	(function() {
+		var section = document.currentScript.closest('.b-products');
+		var btns = section.querySelectorAll('.js-filter');
+		var cards = section.querySelectorAll('.__offer-card');
+
+		btns.forEach(function(btn) {
+			btn.addEventListener('click', function() {
+				var filter = this.dataset.filter;
+
+				btns.forEach(function(b) {
+					b.classList.toggle('btn-primary', b.dataset.filter === filter);
+					b.classList.toggle('btn-outline-primary', b.dataset.filter !== filter);
+				});
+
+				cards.forEach(function(card) {
+					var cats = card.dataset.categories ? card.dataset.categories.split(' ') : [];
+					var show = filter === 'all' || cats.includes(filter);
+					card.style.display = show ? '' : 'none';
+				});
+			});
+		});
+	})();
+	</script>
 
 </section>
