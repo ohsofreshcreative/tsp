@@ -40,7 +40,7 @@
 							@if (!empty($slide['icon_url']))
 							<img class="mb-4 w-14 h-14 object-contain" src="{{ $slide['icon_url'] }}" alt="{{ $slide['icon_alt'] }}">
 							@endif
-							<h3 class="text-h4 text-primary mb-4">{{ $slide['title'] }}</h3>
+							<p class="text-h5 text-primary mb-4">{{ $slide['title'] }}</p>
 							@if (!empty($slide['excerpt']))
 							<p class="mb-6">{{ $slide['excerpt'] }}</p>
 							@endif

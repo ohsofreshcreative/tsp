@@ -32,6 +32,11 @@
 			<h1 data-gsap-element="header" class="text-h2 text-white">
 				{{ $g_banner['title'] }}
 			</h1>
+			@if (!empty($g_banner['text']))
+            <div data-gsap-element="text" class="text-white mt-4">
+                {!! $g_banner['text'] !!}
+            </div>
+			@endif
 
 			<div class="inline-buttons m-btn">
 				@if (!empty($g_banner['button1']))

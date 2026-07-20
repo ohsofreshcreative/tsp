@@ -28,7 +28,7 @@
 					nextt() { this.goTo((this.active + 1) % this.images.length); }
 				}">
 
-				<div class="relative overflow-hidden radius aspect-[4/3]">
+				<div class="relative overflow-hidden radius aspect-[4/4]">
 					<img
 						:src="images[active].url"
 						:alt="images[active].alt"

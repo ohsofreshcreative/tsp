@@ -45,6 +45,24 @@ class Cta extends Block
 				'ui_on_text' => 'Tak',
 				'ui_off_text' => 'Nie',
 			])
+			->addTrueFalse('content', [
+				'label' => 'Inna treść',
+				'instructions' => 'Włącz, aby nadpisać treść z ustawień globalnych',
+				'ui' => 1,
+				'ui_on_text' => 'Tak',
+				'ui_off_text' => 'Nie',
+			])
+			->addText('header', [
+				'label' => 'Nagłówek',
+				'conditional_logic' => [[['field' => 'content', 'operator' => '==', 'value' => '1']]],
+			])
+			->addWysiwyg('txt', [
+				'label' => 'Treść',
+				'tabs' => 'visual',
+				'toolbar' => 'basic',
+				'media_upload' => false,
+				'conditional_logic' => [[['field' => 'content', 'operator' => '==', 'value' => '1']]],
+			])
 
 			/*--- USTAWIENIA BLOKU ---*/
 
@@ -106,8 +124,19 @@ class Cta extends Block
 
 	public function with(): array
 	{
+		$g_octa = get_field('g_octa', 'option');
+
+		if ((bool) get_field('content')) {
+			if ($header = get_field('header')) {
+				$g_octa['header'] = $header;
+			}
+			if ($txt = get_field('txt')) {
+				$g_octa['txt'] = $txt;
+			}
+		}
+
 		$fields = [
-			'g_octa' => get_field('g_octa', 'option'),
+			'g_octa' => $g_octa,
 			'form' => (bool) get_field('form'),
 
 			'section_id' => get_field('section_id'),

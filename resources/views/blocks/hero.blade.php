@@ -56,6 +56,11 @@
             <h1 data-gsap-element="header" class="text-h2 text-white">
                 {{ $g_hero['title'] }}
             </h1>
+			@if (!empty($g_hero['text']))
+            <div data-gsap-element="text" class="text-white mt-2">
+                {!! $g_hero['text'] !!}
+            </div>
+			@endif
 
             <div class="inline-buttons m-btn">
                 @if (!empty($g_hero['button1']))
