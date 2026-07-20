@@ -27,7 +27,7 @@ class DropdownWalker extends Walker_Nav_Menu
         // Case 1: Element jest na najwyższym poziomie i ma dzieci (jest dropdownem)
         if ($depth === 0 && $has_children) {
             // Logika Alpine.js do otwierania/zamykania przy hover zostaje w <li>
-            $output .= '<li x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" class="relative ' . esc_attrs(implode(' ', $item->classes)) . '">';
+            $output .= '<li x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" class="relative ' . esc_attr(implode(' ', $item->classes)) . '">';
             
             // ### POCZĄTEK ZMIANY ###
             // Zamiast <button> używamy <a> z linkiem do strony nadrzędnej.
