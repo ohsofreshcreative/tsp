@@ -38,7 +38,13 @@ class Slider extends Block
             ])
             ->addTab('Treści', ['placement' => 'top'])
             ->addText('slider_title', ['label' => 'Tytuł sekcji'])
-            ->addMessage('Informacja', 'Slider automatycznie wyświetla nadrzędne wpisy z sekcji „Oferta". Aby zarządzać elementami, przejdź do „Oferta" w panelu administratora.')
+            ->addRelationship('slider_offers', [
+                'label'         => 'Wpisy oferty (kolejność ma znaczenie)',
+                'post_type'     => ['offer'],
+                'filters'       => ['search'],
+                'return_format' => 'object',
+                'instructions'  => 'Wybierz i ułóż wpisy oferty w dowolnej kolejności. Jeśli pole jest puste, wyświetlą się wszystkie automatycznie.',
+            ])
 
             ->addTab('Ustawienia bloku', ['placement' => 'top'])
             ->addText('section_id', ['label' => 'ID'])
@@ -76,17 +82,23 @@ class Slider extends Block
 
     public function with(): array
     {
-        $offers_query = new \WP_Query([
-            'post_type'      => 'offer',
-            'post_parent'    => 0,
-            'posts_per_page' => -1,
-            'orderby'        => 'menu_order',
-            'order'          => 'ASC',
-            'post_status'    => 'publish',
-        ]);
+        $selected = get_field('slider_offers') ?: [];
+
+        if (empty($selected)) {
+            $offers_query = new \WP_Query([
+                'post_type'      => 'offer',
+                'post_parent'    => 0,
+                'posts_per_page' => -1,
+                'orderby'        => 'menu_order',
+                'order'          => 'ASC',
+                'post_status'    => 'publish',
+            ]);
+            $selected = $offers_query->posts;
+            wp_reset_postdata();
+        }
 
         $slides = [];
-        foreach ($offers_query->posts as $post) {
+        foreach ($selected as $post) {
             $thumb_id = get_post_thumbnail_id($post->ID);
             $icon     = get_field('offer_icon', $post->ID);
             $slides[] = [
@@ -99,7 +111,6 @@ class Slider extends Block
                 'icon_alt'  => $icon['alt'] ?? '',
             ];
         }
-        wp_reset_postdata();
 
         $fields = [
             'slides'       => $slides,
