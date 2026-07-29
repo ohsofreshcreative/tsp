@@ -28,7 +28,7 @@
 	@endif
 
 	<div class=" __wrapper c-main relative z-10">
-		<div class="__content relative flex flex-col justify-center w-full md:w-10/12 lg:w-8/12 z-20 pt-10 pb-10 md:pt-48 md:pb-62">
+		<div class="__content relative flex flex-col justify-center w-full md:w-10/12 lg:w-8/12 z-20 pt-48 pb-62">
 			<h1 data-gsap-element="header" class="text-h2 text-white">
 				{{ $g_banner['title'] }}
 			</h1>
