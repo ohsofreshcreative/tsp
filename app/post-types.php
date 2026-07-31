@@ -54,3 +54,31 @@ add_action('init', function () {
 		'rewrite'      => ['slug' => 'kategoria-oferty', 'with_front' => false],
 	]);
 });
+
+// Dodaj kolumnę "Kategoria" na liście ofert w adminie
+add_filter('manage_offer_posts_columns', function ($columns) {
+	return [
+		'cb'             => $columns['cb'],
+		'title'          => $columns['title'],
+		'offer_category' => 'Kategoria',
+		'date'           => $columns['date'],
+	];
+});
+
+add_action('manage_offer_posts_custom_column', function ($column, $post_id) {
+	if ($column === 'offer_category') {
+		$terms = get_the_terms($post_id, 'offer_category');
+		if (!empty($terms) && !is_wp_error($terms)) {
+			$links = array_map(function ($term) {
+				$url = add_query_arg([
+					'post_type'      => 'offer',
+					'offer_category' => $term->slug,
+				], admin_url('edit.php'));
+				return '<a href="' . esc_url($url) . '">' . esc_html($term->name) . '</a>';
+			}, $terms);
+			echo implode(', ', $links);
+		} else {
+			echo '—';
+		}
+	}
+}, 10, 2);
