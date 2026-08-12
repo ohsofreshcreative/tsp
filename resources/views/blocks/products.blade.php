@@ -16,11 +16,21 @@
 	<div class="__wrapper c-main relative">
 
 		@if (!empty($categories) && count($categories) > 1)
-		<div class="__filters flex flex-wrap gap-3 mb-8">
-			<button class="btn btn-primary js-filter active" data-filter="all">Wszystkie</button>
-			@foreach ($categories as $slug => $name)
-			<button class="btn btn-outline-primary js-filter" data-filter="{{ $slug }}">{{ $name }}</button>
-			@endforeach
+		<div class="__filters mb-8">
+			{{-- Mobile: lista rozwijana --}}
+			<select class="js-filter-select sm:hidden w-full border border-primary text-primary rounded px-4 py-2 bg-white">
+				<option value="all">Wszystkie</option>
+				@foreach ($categories as $slug => $name)
+				<option value="{{ $slug }}">{{ $name }}</option>
+				@endforeach
+			</select>
+			{{-- Desktop: przyciski --}}
+			<div class="hidden sm:flex flex-wrap gap-3">
+				<button class="btn btn-primary js-filter" data-filter="all">Wszystkie</button>
+				@foreach ($categories as $slug => $name)
+				<button class="btn btn-outline-primary js-filter" data-filter="{{ $slug }}">{{ $name }}</button>
+				@endforeach
+			</div>
 		</div>
 		@endif
 
@@ -61,24 +71,32 @@
 	(function() {
 		var section = document.currentScript.closest('.b-products');
 		var btns = section.querySelectorAll('.js-filter');
+		var select = section.querySelector('.js-filter-select');
 		var cards = section.querySelectorAll('.__offer-card');
+
+		function applyFilter(filter) {
+			btns.forEach(function(b) {
+				b.classList.toggle('btn-primary', b.dataset.filter === filter);
+				b.classList.toggle('btn-outline-primary', b.dataset.filter !== filter);
+			});
+			if (select) select.value = filter;
+			cards.forEach(function(card) {
+				var cats = card.dataset.categories ? card.dataset.categories.split(' ') : [];
+				card.style.display = (filter === 'all' || cats.includes(filter)) ? '' : 'none';
+			});
+		}
 
 		btns.forEach(function(btn) {
 			btn.addEventListener('click', function() {
-				var filter = this.dataset.filter;
-
-				btns.forEach(function(b) {
-					b.classList.toggle('btn-primary', b.dataset.filter === filter);
-					b.classList.toggle('btn-outline-primary', b.dataset.filter !== filter);
-				});
-
-				cards.forEach(function(card) {
-					var cats = card.dataset.categories ? card.dataset.categories.split(' ') : [];
-					var show = filter === 'all' || cats.includes(filter);
-					card.style.display = show ? '' : 'none';
-				});
+				applyFilter(this.dataset.filter);
 			});
 		});
+
+		if (select) {
+			select.addEventListener('change', function() {
+				applyFilter(this.value);
+			});
+		}
 	})();
 	</script>
 
