@@ -17,14 +17,13 @@
 
 		@if (!empty($categories) && count($categories) > 1)
 		<div class="__filters mb-8">
-			{{-- Mobile: lista rozwijana --}}
+			
 			<select class="js-filter-select sm:hidden w-full border border-primary text-primary rounded px-4 py-2 bg-white">
 				<option value="all">Wszystkie</option>
 				@foreach ($categories as $slug => $name)
 				<option value="{{ $slug }}">{{ $name }}</option>
 				@endforeach
 			</select>
-			{{-- Desktop: przyciski --}}
 			<div class="hidden sm:flex flex-wrap gap-3">
 				<button class="btn btn-primary js-filter" data-filter="all">Wszystkie</button>
 				@foreach ($categories as $slug => $name)
