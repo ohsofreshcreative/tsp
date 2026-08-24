@@ -27,15 +27,6 @@ class Slider extends Block
 
         $slider
             ->setLocation('block', '==', 'acf/slider')
-            ->addText('block-title', [
-                'label' => 'Tytuł',
-                'required' => 0,
-            ])
-            ->addAccordion('accordion1', [
-                'label' => 'Slider - Oferta',
-                'open' => false,
-                'multi_expand' => true,
-            ])
             ->addTab('Treści', ['placement' => 'top'])
             ->addText('slider_title', ['label' => 'Tytuł sekcji'])
             ->addRelationship('slider_offers', [

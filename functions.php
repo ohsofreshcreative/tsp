@@ -102,3 +102,6 @@ collect(['setup', 'filters', 'post-types'])
 add_filter('sage/acf-composer/fields', fn() => [
 	App\Blocks\ExampleBlock::class,
 ]);
+
+
+add_filter( 'acf/settings/enable_block_bindings', '__return_false' );
