@@ -27,6 +27,12 @@ use App\Walkers\MobileDropdownWalker;
 		@endif
 
 
+		<div class="flex items-center gap-2 mr-6">
+			{!! do_shortcode('[gt-link lang="pl" widget_look="flags"]') !!}
+			{!! do_shortcode('[gt-link lang="en" widget_look="flags"]') !!}
+			{!! do_shortcode('[gt-link lang="it" widget_look="flags"]') !!}
+		</div>
+
 		<div class="">
 			<a href="/kontakt/" class="block w-full btn btn-secondary">
 				Kontakt
@@ -102,6 +108,13 @@ use App\Walkers\MobileDropdownWalker;
 					Kontakt
 				</a>
 			</div>
+
+
+		<div class="flex items-center gap-2 mt-16">
+			{!! do_shortcode('[gt-link lang="pl" widget_look="flags"]') !!}
+			{!! do_shortcode('[gt-link lang="en" widget_look="flags"]') !!}
+			{!! do_shortcode('[gt-link lang="it" widget_look="flags"]') !!}
+		</div>
 		</div>
 
 	</div>

@@ -159,6 +159,14 @@
 @import 'swiper/css/pagination';
 @import 'baguettebox.js/dist/baguetteBox.min.css';
 
+/* GTranslate marks only the clicked link; hide its mobile/desktop copy too. */
+.masthead a.gt-current-lang,
+.masthead:has(a.gt-current-lang[data-gt-lang="pl"]) a[data-gt-lang="pl"],
+.masthead:has(a.gt-current-lang[data-gt-lang="en"]) a[data-gt-lang="en"],
+.masthead:has(a.gt-current-lang[data-gt-lang="it"]) a[data-gt-lang="it"] {
+  display: none;
+}
+
 /*-- USED ---*/
 @import '../css/blocks/hero.scss';
 @import '../css/blocks/about.scss';
